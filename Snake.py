@@ -4,7 +4,6 @@
 # fix food spawn on snake
 # add pause
 # add sound
-# fix red x on game window
 
 # ------------------------------------------------ Bug`s ------------------------------------------------
 # snake array needs and creates duplicate values at array locations 0 and 1.
@@ -50,24 +49,25 @@ def snake(screenWidthInBlockUnits, screenHeighInBlockUnits, snakeSpeed):
         for event in game.event.get():
             if event.type == game.KEYDOWN:
                 if event.key == game.K_ESCAPE:
-                    print(snakeBodyPos)
                     gameOver(gameScore)
-                if event.key == game.K_RIGHT and snakeDirection != 'left':
+                elif event.key == game.K_RIGHT and snakeDirection != 'left':
                     snakeDirection = 'right'
-                if event.key == game.K_LEFT and snakeDirection != 'right':
+                elif event.key == game.K_LEFT and snakeDirection != 'right':
                     snakeDirection = 'left'
-                if event.key == game.K_UP and snakeDirection != 'down':
+                elif event.key == game.K_UP and snakeDirection != 'down':
                     snakeDirection = 'up'
-                if event.key == game.K_DOWN and snakeDirection != 'up':
+                elif event.key == game.K_DOWN and snakeDirection != 'up':
                     snakeDirection = 'down'
+            elif event.type == game.QUIT:
+                gameOver(gameScore)
         # Create new block at snake head according to last key pressed.
         if snakeDirection == 'right':
             snakeBodyPos[0][0] += 10
-        if snakeDirection == 'left':
+        elif snakeDirection == 'left':
             snakeBodyPos[0][0] -= 10
-        if snakeDirection == 'up':
+        elif snakeDirection == 'up':
             snakeBodyPos[0][1] -= 10
-        if snakeDirection == 'down':
+        else:
             snakeBodyPos[0][1] += 10
 
         # Insert a new block at snake head according to last key pressed.    
@@ -75,10 +75,10 @@ def snake(screenWidthInBlockUnits, screenHeighInBlockUnits, snakeSpeed):
         # Handle if snake head touched a screen edge.
         if snakeBodyPos[0][0] >= screenWidthInPixelUnits or snakeBodyPos[0][0] < 0:
             gameOver(gameScore)
-        if snakeBodyPos[0][1] >= screenHeighInPixelUnits or snakeBodyPos[0][1] < 0:
+        elif snakeBodyPos[0][1] >= screenHeighInPixelUnits or snakeBodyPos[0][1] < 0:
             gameOver(gameScore)
         # Handle if snake head touched the food.
-        if snakeBodyPos[0] == foodPos:
+        elif snakeBodyPos[0] == foodPos:
             gameScore += 1
             foodPos = [randrange(0,screenWidthInPixelUnits, 10),randrange(0,screenHeighInPixelUnits, 10)]
         # Pop and hide last tail block to simulate movement.
@@ -109,4 +109,4 @@ def gameOver(gameScore):
     print("Game Length (ms):", game.time.get_ticks())
 
 # screen width in block units, screen height in block units, game speed
-snake(30,30,10)
+snake(30,30,1)
