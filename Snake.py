@@ -22,7 +22,7 @@ import sys
 from random import randrange
 
 # Python snake game.
-def snake(screenWidthInBlockUnits, screenHeighInBlockUnits, snakeSpeed):
+def snake(snakeBlockSize, screenWidthInBlockUnits, screenHeighInBlockUnits, snakeSpeed):
     # Set up the game window.
     screenWidthInPixelUnits = screenWidthInBlockUnits * 10
     screenHeighInPixelUnits = screenHeighInBlockUnits * 10
@@ -32,10 +32,14 @@ def snake(screenWidthInBlockUnits, screenHeighInBlockUnits, snakeSpeed):
 
     # Create and position the snake and the food.
     # Set the snake head position at bottom of screen x pixels before the screen ends.
-    snakeYPos = screenHeighInPixelUnits-10
-    snakeBodyPos = [[70,snakeYPos], [70,snakeYPos], [60,snakeYPos], [50,snakeYPos], [40,snakeYPos], [30,snakeYPos], [20,snakeYPos], [10,snakeYPos], [0,snakeYPos], 
-        [-10,snakeYPos]]
     snakeDirection = 'right'
+    snakeBlockSize = (snakeBlockSize*10)-10
+    snakeYPos = screenHeighInPixelUnits-10
+    snakeBodyPos = []
+
+    for i in range(snakeBlockSize, -10, -10):
+        snakeBodyPos.append([i,snakeYPos])
+    snakeBodyPos.insert(0, list(snakeBodyPos[0]))
     foodPos = [randrange(0,screenWidthInPixelUnits, 10),randrange(0,screenHeighInPixelUnits, 10)]
 
     # Set up the game colors.
@@ -116,5 +120,5 @@ def gameOver(gameScore):
     print("Score:", gameScore)
     print("Game Length (ms):", game.time.get_ticks())
 
-# screen width in block units, screen height in block units, game speed
-snake(30,30,10)
+# snakeBlockSize, screen width in block units, screen height in block units, game speed
+snake(9,30,30,2)
