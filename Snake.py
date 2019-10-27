@@ -1,6 +1,7 @@
 # ------------------------------------------------ To-Do ------------------------------------------------
 # Stop food from spawning on the snake.
 # Fix pause
+# Improve grid scaling
 # Add sound
 # Create simulation game mode and user game mode.
 
@@ -24,7 +25,7 @@ def snake(snakeBlockLength, gameblockScale, screenWidthInBlockUnits, screenHeigh
     # Set up the game window.
     screenWidthInPixelUnits = screenWidthInBlockUnits * gameblockScale
     screenHeighInPixelUnits = screenHeighInBlockUnits * gameblockScale
-    screen = game.display.set_mode((screenWidthInPixelUnits, screenHeighInPixelUnits))
+    screen = game.display.set_mode((screenWidthInPixelUnits+1, screenHeighInPixelUnits+1))
     game.display.set_caption(' Snake')
     game.display.set_icon(game.image.load(r'C:\Users\Alvaro Santillan\Documents\Programming Projects\perfect_snake\logo.png').convert())
 
@@ -104,7 +105,7 @@ def snake(snakeBlockLength, gameblockScale, screenWidthInBlockUnits, screenHeigh
             # Draw food and grid.
             game.draw.rect(screen, white, game.Rect(foodPos[0],foodPos[1],gameblockScale,gameblockScale))
             if gameblockScale != 1:
-                for i in range(-1, screenWidthInPixelUnits, gameblockScale):
+                for i in range(0, screenWidthInPixelUnits+1, gameblockScale):
                     game.draw.line(screen, lightGray, [i, screenHeighInPixelUnits], [i,0], 1)
                     game.draw.line(screen, lightGray, [screenWidthInPixelUnits, i], [0,i], 1)
             
@@ -121,4 +122,4 @@ def gameOver(gameScore):
 
 # snakeBlockLength, gameblockScale, screenWidthInBlockUnits, screenHeighInBlockUnits, snakeSpeed
 # Note: Snake length must be between 1 and (screen width -1). 
-snake(9,10,30,30,10)
+snake(3,10,50,50,1)
