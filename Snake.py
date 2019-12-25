@@ -1,9 +1,11 @@
 # ------------------------------------------------ To-Do ------------------------------------------------
 # Stop food from spawning on the snake.
-# Fix pause
+# Fix pause traceback error
+# Fix ignore user input while paused.
 # Improve grid scaling
 # Add sound
 # Create simulation game mode and user game mode.
+# Fix rapid control input causes collision. (moveing left fast down, right)
 
 # ------------------------------------------------ Bug`s ------------------------------------------------
 # Snake array needs and creates duplicate values at array locations 0 and 1.
@@ -19,6 +21,7 @@
 import pygame as game
 import sys
 from random import randrange
+from math import floor
 
 # Python snake game.
 def snake(snakeBlockLength, gameblockScale, screenWidthInBlockUnits, screenHeighInBlockUnits, snakeSpeed):
@@ -106,9 +109,8 @@ def snake(snakeBlockLength, gameblockScale, screenWidthInBlockUnits, screenHeigh
             game.draw.rect(screen, white, game.Rect(foodPos[0],foodPos[1],gameblockScale,gameblockScale))
             if gameblockScale != 1:
                 for i in range(0, screenWidthInPixelUnits+1, gameblockScale):
-                    game.draw.line(screen, lightGray, [i, screenHeighInPixelUnits], [i,0], 1)
-                    game.draw.line(screen, lightGray, [screenWidthInPixelUnits, i], [0,i], 1)
-            
+                    game.draw.line(screen, lightGray, [i, screenHeighInPixelUnits], [i,0], floor(gameblockScale/10))
+                    game.draw.line(screen, lightGray, [screenWidthInPixelUnits, i], [0,i], floor(gameblockScale/10))
             # Load new frame on the screen and set famerate. 
             game.display.update()
             game.time.Clock().tick(snakeSpeed)
@@ -122,4 +124,4 @@ def gameOver(gameScore):
 
 # snakeBlockLength, gameblockScale, screenWidthInBlockUnits, screenHeighInBlockUnits, snakeSpeed
 # Note: Snake length must be between 1 and (screen width -1). 
-snake(3,10,50,50,1)
+snake(9,25,25,25,10)
